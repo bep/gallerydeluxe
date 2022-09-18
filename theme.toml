@@ -1,0 +1,12 @@
+
+name        = "Gallery Deluxe"
+license     = "MIT"
+licenselink = "https://github.com/bep/gallerydeluxe/blob/main/LICENSE"
+description = "Fast gallery suitable for lots of images."
+homepage    = "https://github.com/bep/gallerydeluxe"
+demosite    = "https://staticbattery.com/"
+tags        = ["Gallery", "Responsive"]
+min_version = "0.90.0"
+[author]
+  name     = "Bjørn Erik Pedersen"
+  homepage = "http://bep.is"

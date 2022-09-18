@@ -1,0 +1,9 @@
+{{/* 20, 100, 250, and 500 height */}}
+{{ $m := dict
+  "20"  (.Resize "x20")
+  "100" (.Resize "x100")
+  "250" (.Resize "x250")
+  "500" (.Resize "x500")
+}}
+
+{{ return $m }}

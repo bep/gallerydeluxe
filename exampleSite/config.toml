@@ -1,0 +1,41 @@
+baseURL      = "https://www.staticbattery.com/"
+title        = "staticbattery.com"
+disableKinds = ["section", "taxonomy", "term"]
+
+[caches]
+    [caches.images]
+        dir    = ':cacheDir/gallerydeluxe'
+        maxAge = "80h"
+
+[imaging]
+    resampleFilter = "CatmullRom"
+    quality        = 71
+    anchor         = "smart"
+
+[server]
+    [[server.headers]]
+        for = '/**'
+        [server.headers.values]
+            Referrer-Policy = 'strict-origin-when-cross-origin'
+
+[params]
+    [params.gallerydeluxe]
+
+[module]
+    [[module.mounts]]
+        source = "assets"
+        target = "assets"
+    [[module.mounts]]
+        source = "layouts"
+        target = "layouts"
+    [[module.mounts]]
+        source = "content"
+        target = "content"
+    [[module.mounts]]
+        source = "static"
+        target = "static"
+    [[module.mounts]]
+        source = '/Users/bep/Pictures/Albums/Staticbattery'
+        target = 'content/images'
+    [[module.imports]]
+        path = "github.com/bep/gallerydeluxe"

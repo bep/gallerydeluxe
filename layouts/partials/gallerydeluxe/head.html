@@ -1,0 +1,9 @@
+{{ $js := resources.Get "js/gallerydeluxe/cdn/index.js" }}
+{{ $js = $js | js.Build (dict "params" site.Params.gallerydeluxe "minify" hugo.IsProduction) }}
+{{ $styles := resources.Get "css/gallerydeluxe/styles.css" }}
+{{ if hugo.IsProduction}}
+    {{ $js = $js | fingerprint }}
+    {{ $styles = $styles | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" defer></script>
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}"></link>

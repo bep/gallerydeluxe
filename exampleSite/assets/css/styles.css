@@ -1,0 +1,25 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+}
+
+.logo {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 2px 2px;
+}
+
+.gd-modal-loaded .logo {
+  display: none;
+}
+
+.logo:hover {
+  cursor: pointer;
+  color: #ffe0c9;
+}

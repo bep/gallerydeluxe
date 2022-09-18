@@ -1,0 +1,33 @@
+{{ $sourcePath := .sourcePath | default "images" }}
+{{ $gallery := site.GetPage $sourcePath }}
+{{ $imageDataUrl := "" }}
+{{ $s := slice }}
+{{ with $gallery }}
+  {{ $images := $gallery.Resources.Match "**.jpg" }}
+  {{ range $images }}
+    {{ $thumbs := partial "gallerydeluxe/create-thumbs.html" . }}
+    {{ $m :=  dict
+      "name" .Name
+      "full" .RelPermalink
+      "width" .Width
+      "height" .Height
+      "20" (index $thumbs "20").RelPermalink
+      "100" (index $thumbs "100").RelPermalink
+      "250" (index $thumbs "250").RelPermalink
+      "500" (index $thumbs "500").RelPermalink
+    }}
+    {{ $s = $s | append $m }}
+  {{ end }}
+  {{ $r := $s | jsonify | resources.FromString "gallerydeluxe.json" }}
+  {{ if hugo.IsProduction }}
+    {{ $r = $r | minify | fingerprint }}
+  {{ end }}
+  {{ $imageDataUrl = $r.RelPermalink }}
+{{ else }}
+  {{ errorf "gallerydeluxe: No bundle found in %q. sourcePath must be set to a valid Hugo bundle with JPG images in it." $sourcePath }}
+{{ end }}
+
+{{ return (dict
+  "imageDataUrl" $imageDataUrl
+  )
+}}
