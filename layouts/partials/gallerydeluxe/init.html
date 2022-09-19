@@ -18,7 +18,7 @@
     }}
     {{ $s = $s | append $m }}
   {{ end }}
-  {{ $r := $s | jsonify | resources.FromString "gallerydeluxe.json" }}
+  {{ $r := $s | jsonify | resources.FromString (printf "%s-gallery.json" $sourcePath) }}
   {{ if hugo.IsProduction }}
     {{ $r = $r | minify | fingerprint }}
   {{ end }}
