@@ -43,7 +43,7 @@
 
 .gd-modal-content.gd-modal-thumbnail {
   backdrop-filter: blur(5px);
-  transition: opacity 0.75s ease-out;
+  transition: opacity 0.75s ease;
   z-index: 10;
   opacity: 1;
 }
@@ -55,8 +55,8 @@
 .gd-modal-close {
   position: absolute;
   z-index: 20;
-  top: 15px;
-  right: 35px;
+  top: 0px;
+  right: 10px;
   color: #8a8a8a;
   font-size: 40px;
   font-weight: bold;
@@ -65,7 +65,7 @@
 
 @media only screen and (max-device-width: 800px) {
   .gd-modal-close {
-    font-size: 90px;
+    font-size: 45px;
   }
 }
 

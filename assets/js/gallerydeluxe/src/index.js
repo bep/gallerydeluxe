@@ -92,13 +92,24 @@ let GalleryDeluxe = {
 			const classThumbnail = 'gd-modal-thumbnail';
 			// Prevent scrolling of the background.
 			document.body.style.overflow = 'hidden';
+			let oldEls = modal.querySelectorAll('.gd-modal-content');
+			let oldElsRemoved = false;
+
+			// Delay the removal of the old elements to make sure we
+			// have a image on screen before we remove the old one,
+			// even on slower connections.
+			const removeOldEls = () => {
+				if (oldElsRemoved) {
+					return;
+				}
+				oldElsRemoved = true;
+				oldEls.forEach((element) => {
+					element.remove();
+				});
+			};
 
 			if (activeImage) {
 				let modal = document.getElementById('gd-modal');
-				let els = modal.querySelectorAll('.gd-modal-content');
-				els.forEach((element) => {
-					element.remove();
-				});
 
 				let thumbnail = new Image();
 				thumbnail.classList.add('gd-modal-content');
@@ -116,6 +127,7 @@ let GalleryDeluxe = {
 				thumbnail.onload = function () {
 					if (thumbnail) {
 						modal.appendChild(thumbnail);
+						removeOldEls();
 					}
 				};
 
@@ -126,11 +138,16 @@ let GalleryDeluxe = {
 						if (thumbnail) {
 							thumbnail.classList.add(classLoaded);
 						}
+						removeOldEls();
 					}
 				};
 
 				modal.style.display = 'block';
 			}
+
+			setTimeout(function () {
+				removeOldEls();
+			}, 1000);
 		};
 
 		// Load the gallery.
