@@ -294,6 +294,15 @@ export function Pig(imageData, options) {
 		},
 
 		/**
+		 * Get the a custom style for the container element.
+		 *
+		 *  * @param {string} filename - The filename of the image.
+		 */
+		styleForElement: function (filename) {
+			return '';
+		},
+
+		/**
 		 * Get a callback with the filename of the image
 		 * which was clicked.
 		 *
@@ -810,6 +819,7 @@ ProgressiveImage.prototype.load = function () {
 			// Show thumbnail
 			if (!this.thumbnail) {
 				this.thumbnail = new Image();
+
 				this.thumbnail.src = this.pig.settings.urlForSize(this.filename, this.pig.settings.thumbnailSize);
 				this.thumbnail.className = this.classNames.thumbnail;
 				this.thumbnail.onload = function () {
@@ -885,6 +895,12 @@ ProgressiveImage.prototype.getElement = function () {
 	if (!this.element) {
 		this.element = document.createElement(this.pig.settings.figureTagName);
 		this.element.className = this.classNames.figure;
+
+		let style = this.pig.settings.styleForElement(this.filename);
+		if (this.style) {
+			this.element.style = style;
+		}
+
 		if (this.pig.settings.onClickHandler !== null) {
 			this.element.addEventListener(
 				'click',

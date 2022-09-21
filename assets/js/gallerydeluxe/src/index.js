@@ -1,6 +1,6 @@
 'use strict';
 
-//import * as params from '@params';
+import * as params from '@params';
 import { Pig } from './pig';
 import { newSwiper } from './helpers';
 
@@ -153,11 +153,15 @@ let GalleryDeluxe = {
 		// Load the gallery.
 		let images = await (await fetch(dataUrl)).json();
 
-		// Shuffle them to make it more interesting.
-		images = images
-			.map((value) => ({ value, sort: Math.random() }))
-			.sort((a, b) => a.sort - b.sort)
-			.map(({ value }) => value);
+		if (params.shuffle) {
+			// Shuffle them to make it more interesting.
+			images = images
+				.map((value) => ({ value, sort: Math.random() }))
+				.sort((a, b) => a.sort - b.sort)
+				.map(({ value }) => value);
+		} else if (params.reverse) {
+			images = images.reverse();
+		}
 
 		let imagesMap = new Map();
 		let imageData = [];
@@ -182,6 +186,21 @@ let GalleryDeluxe = {
 			spaceBetweenImages: 1,
 			urlForSize: function (filename, size) {
 				return imagesMap.get(filename)[size];
+			},
+			styleForElement: function (filename) {
+				let image = imagesMap.get(filename);
+				if (!image || image.colors.size < 1) {
+					return '';
+				}
+				let colors = image.colors;
+				let first = colors[0];
+				let second = '#ccc';
+				// Some images have only one dominant color.
+				if (colors.length > 1) {
+					second = colors[1];
+				}
+
+				return ` background: linear-gradient(15deg, ${first}, ${second});`;
 			},
 		};
 
