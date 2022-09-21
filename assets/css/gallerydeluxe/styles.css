@@ -1,7 +1,3 @@
-.gd-figure {
-  background-color: #565657 !important;
-}
-
 .gd-figure:hover {
   filter: brightness(1.25);
   cursor: pointer;

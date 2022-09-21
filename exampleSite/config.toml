@@ -2,6 +2,14 @@ baseURL      = "https://www.staticbattery.com/"
 title        = "staticbattery.com"
 disableKinds = ["section", "taxonomy", "term"]
 
+[params]
+    [params.gallerydeluxe]
+        # Shuffle the images in the gallery to give the impression of a new gallery each page load.
+        shuffle = false
+
+        # Reverse the order of the images in the gallery.
+        reverse = true
+
 [caches]
     [caches.images]
         dir    = ':cacheDir/gallerydeluxe'
@@ -17,9 +25,6 @@ disableKinds = ["section", "taxonomy", "term"]
         for = '/**'
         [server.headers.values]
             Referrer-Policy = 'strict-origin-when-cross-origin'
-
-[params]
-    [params.gallerydeluxe]
 
 [module]
     [[module.mounts]]
