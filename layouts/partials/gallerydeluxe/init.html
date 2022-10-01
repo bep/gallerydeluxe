@@ -2,12 +2,27 @@
 {{ $gallery := site.GetPage $sourcePath }}
 {{ $imageDataUrl := "" }}
 {{ $s := slice }}
+{{ $params := site.Params.gallerydeluxe }}
 {{ with $gallery }}
   {{ $images := $gallery.Resources.Match "**.jpg" }}
   {{ range $images }}
     {{ $thumbs := partial "gallerydeluxe/create-thumbs.html" . }}
     {{ $20 := (index $thumbs "20") }}
     {{ $colors := slice }}
+    {{ $exif := dict }}
+    {{ if $params.enable_exif }}
+      {{/* Workaround for https://github.com/gohugoio/hugo/issues/10345 */}}
+      {{ $tags := newScratch }}
+      {{ range $k, $v := .Exif.Tags }}
+        {{ $tags.Set $k $v }}
+      {{ end }}
+      {{ $exif = dict
+        "Tags" $tags.Values
+        "Date" .Exif.Date
+        "Lat" .Exif.Lat
+        "Long" .Exif.Long
+      }}
+    {{ end }}
     {{ if (ge hugo.Version "0.104") }}
       {{/* .Colors method was added in Hugo 0.104.0 */}}
       {{ $colors = $20.Colors }}
@@ -15,6 +30,7 @@
     {{ $m :=  dict
       "name" .Name
       "full" .RelPermalink
+      "exif"  $exif
       "width" .Width
       "height" .Height
       "colors" $colors

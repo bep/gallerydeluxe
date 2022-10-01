@@ -111,6 +111,40 @@ let GalleryDeluxe = {
 			if (activeImage) {
 				let modal = document.getElementById('gd-modal');
 
+				if (params.enable_exif) {
+					let exif = document.getElementById('gd-modal-exif');
+					const onTimeOutClass = 'gd-modal-exif-ontimeout';
+					exif.classList.remove(onTimeOutClass);
+					let child = exif.lastElementChild;
+					while (child) {
+						exif.removeChild(child);
+						child = exif.lastElementChild;
+					}
+					let dl = document.createElement('dl');
+					exif.appendChild(dl);
+
+					const addTag = (tag, value) => {
+						let dt = document.createElement('dt');
+						dt.innerText = camelToTitle(tag);
+						dl.appendChild(dt);
+						let dd = document.createElement('dd');
+						dd.innerText = value;
+						dl.appendChild(dd);
+					};
+
+					let date = new Date(activeImage.exif.Date);
+					var dateString = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+					addTag('Date', dateString);
+					let tags = activeImage.exif.Tags;
+					for (const tag in tags) {
+						addTag(tag, tags[tag]);
+					}
+
+					setTimeout(() => {
+						exif.classList.add(onTimeOutClass);
+					}, 1000);
+				}
+
 				let thumbnail = new Image();
 				thumbnail.classList.add('gd-modal-content');
 				thumbnail.width = activeImage.width;
@@ -207,5 +241,11 @@ let GalleryDeluxe = {
 		new Pig(imageData, options).enable();
 	},
 };
+
+function camelToTitle(text) {
+	return text.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
+		return str.toUpperCase();
+	});
+}
 
 export default GalleryDeluxe;

@@ -44,7 +44,11 @@ Also See the annotated [index.html](exampleSite/layouts/index.html) for a brief 
         shuffle = false
 
         # Reverse the order of the images in the gallery.
-        reverse = true
+        reverse = false
+
+         # Enable Exif data in the gallery.
+         # See https://gohugo.io/content-management/image-processing/#exif-data for how to filter tags.
+        enable_exif = false
 ```
 
 

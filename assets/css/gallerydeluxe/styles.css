@@ -48,6 +48,43 @@
   opacity: 0;
 }
 
+.gd-modal-exif {
+  position: absolute;
+  z-index: 20;
+  bottom: 10px;
+  right: 10px;
+  color: #fff;
+  background-color: #8a8a8a;
+  padding: 0.75rem;
+  opacity: 0.75;
+  filter: drop-shadow(-1px -1px 2px #ccc);
+}
+
+.gd-modal-exif-ontimeout {
+  transition: opacity 2s ease-out;
+  opacity: 0;
+}
+
+.gd-modal-exif:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.gd-modal-exif dl dd {
+  display: inline;
+  margin: 0;
+}
+
+.gd-modal-exif dl dd:after {
+  display: block;
+  content: "";
+}
+
+.gd-modal-exif dl dt {
+  display: inline-block;
+  min-width: 100px;
+}
+
 .gd-modal-close {
   position: absolute;
   z-index: 20;

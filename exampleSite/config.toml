@@ -10,6 +10,10 @@ disableKinds = ["section", "taxonomy", "term"]
         # Reverse the order of the images in the gallery.
         reverse = true
 
+        # Enable Exif data in the gallery.
+        # See https://gohugo.io/content-management/image-processing/#exif-data for how to filter tags.
+        enable_exif = true
+
 [caches]
     [caches.images]
         dir    = ':cacheDir/gallerydeluxe'
@@ -19,6 +23,10 @@ disableKinds = ["section", "taxonomy", "term"]
     resampleFilter = "CatmullRom"
     quality        = 71
     anchor         = "smart"
+    [imaging.exif]
+        disableDate    = false
+        disableLatLong = true
+        includeFields  = 'Artist|LensModel|FNumber|ExposureTime'
 
 [server]
     [[server.headers]]
