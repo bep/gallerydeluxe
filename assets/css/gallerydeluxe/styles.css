@@ -48,6 +48,30 @@
   opacity: 0;
 }
 
+.gd-modal-exif {
+  position: absolute;
+  z-index: 20;
+  top: 60px;
+  right: 10px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.gd-modal-exif dl dd {
+  display: inline;
+  margin: 0;
+}
+
+.gd-modal-exif dl dd:after {
+  display: block;
+  content: "";
+}
+
+.gd-modal-exif dl dt {
+  display: inline-block;
+  min-width: 50px;
+}
+
 .gd-modal-close {
   position: absolute;
   z-index: 20;

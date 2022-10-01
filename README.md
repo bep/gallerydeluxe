@@ -16,7 +16,11 @@ This theme is what you see on [staticbattery.com](https://staticbattery.com/) wh
         shuffle = false
 
         # Reverse the order of the images in the gallery.
-        reverse = true
+        reverse = false
+
+         # Enable Exif data in the gallery.
+         # See https://gohugo.io/content-management/image-processing/#exif-data for how to filter tags.
+        enable_exif = false
 ```
 
 Also See the annotated [index.html](exampleSite/layouts/index.html) for a brief explanation about how to set this up. Note that we currently only support 1 gallery per page. **Note** that the `exampleSite` is currently configured to load a [directory from bep's MacBook](https://github.com/bep/gallerydeluxe/blob/main/exampleSite/config.toml#L38). If you want to take this for a spin, modify that so it points to a directory with some JPEGs on your PC.

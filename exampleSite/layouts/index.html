@@ -16,12 +16,16 @@
 
   {{/* 'images' is a path to a leaf bundle with a index.md file and lots of JPG images. */}}
   {{ $gallery := partial "gallerydeluxe/init.html" (dict "sourcePath" "images") }}
+  {{ $params := site.Params.gallerydeluxe }}
   {{/* We currently only support 1 gallery per page, which is create4 by an element with id 'gallerydeluxe',
     and a valid data url.
   */}}
   <body id="gallerydeluxe" data-gd-image-data-url="{{ $gallery.imageDataUrl }}">
     <div id="gd-modal" class="gd-modal">
       <span id="gd-modal-close" class="gd-modal-close">&times;</span>
+      {{ if $params.enable_exif }}
+        <div id="gd-modal-exif" class="gd-modal-exif"></div>
+      {{ end }}
     </div>
   </body>
 </html>
