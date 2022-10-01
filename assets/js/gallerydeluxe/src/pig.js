@@ -712,11 +712,22 @@ Pig.prototype.enable = function () {
 	this._computeLayout();
 	this._doLayout();
 
+	const windowWidth = () => {
+		return this.scroller === window ? window.innerWidth : this.scroller.offsetWidth;
+	};
+
 	optimizedResize.add(
 		function () {
-			this.lastWindowWidth = this.scroller === window ? window.innerWidth : this.scroller.offsetWidth;
+			this.lastWindowWidth = windowWidth();
 			this._computeLayout();
 			this._doLayout();
+			let newWindowWidth = windowWidth();
+			if (newWindowWidth !== this.lastWindowWidth) {
+				// This happens on orientation change on mobile devices.
+				this.lastWindowWidth = newWindowWidth;
+				this._computeLayout();
+				this._doLayout();
+			}
 		}.bind(this)
 	);
 
