@@ -1,3 +1,5 @@
+>See this [Gallery Deluxe Starter](https://github.com/bep/gallerydeluxe_starter) for a fast route to get this up and running.
+
 * [Configuration](#configuration)
 * [Credits](#credits)
 
