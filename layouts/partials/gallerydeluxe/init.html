@@ -3,9 +3,8 @@
 {{ $imageDataUrl := "" }}
 {{ $s := slice }}
 {{ $params := site.Params.gallerydeluxe }}
-{{ with $gallery }}
-  {{ $images := $gallery.Resources.Match "**.jpg" }}
-  {{ range $images }}
+{{ with $gallery.Resources.ByType "image" }}
+  {{ range . }}
     {{ $thumbs := partial "gallerydeluxe/create-thumbs.html" . }}
     {{ $20 := (index $thumbs "20") }}
     {{ $colors := slice }}
