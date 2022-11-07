@@ -53,11 +53,11 @@ let GalleryDeluxe = {
 			debug('swipe', direction);
 			switch (direction) {
 				case 'left':
-					activeImage = activeImage.prev;
+					activeImage = activeImage.next;
 					openActiveImage();
 					break;
 				case 'right':
-					activeImage = activeImage.next;
+					activeImage = activeImage.prev;
 					openActiveImage();
 					break;
 				default:
@@ -74,10 +74,10 @@ let GalleryDeluxe = {
 		document.addEventListener('keydown', function (e) {
 			switch (e.key) {
 				case 'ArrowLeft':
-					swipe('left');
+					swipe('right');
 					break;
 				case 'ArrowRight':
-					swipe('right');
+					swipe('left');
 					break;
 				case 'Escape':
 					closeModal(e);
