@@ -1,0 +1,7 @@
+baseURL = "https://example.com"
+
+disableKinds = ["taxonomy", "term", "section"]
+
+[module]
+    [[module.imports]]
+        path = "github.com/bep/gallerydeluxe_starter"
