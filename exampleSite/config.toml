@@ -6,6 +6,15 @@ disableKinds = ["taxonomy", "term", "section"]
     [[module.imports]]
         path = "github.com/bep/gallerydeluxe_starter"
 
+[params]
+    # Set to enable Plausible Analytics.
+    plausible_domain = ""
+
+    [params.gallerydeluxe]
+        shuffle     = false
+        reverse     = true
+        enable_exif = false
+
 [imaging]
     resampleFilter = "CatmullRom"
     quality        = 71

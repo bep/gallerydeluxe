@@ -8,6 +8,17 @@ var debug = 0 ? console.log.bind(console, '[gallery-deluxe]') : function () {};
 
 let GalleryDeluxe = {
 	init: async function () {
+		// Having the gallery zoomable makes for a very confusing UI.
+		// This seem to be the only way to disable it on Safari on IOS.
+		document.addEventListener(
+			'touchmove',
+			function (event) {
+				if (event.scale !== 1) {
+					event.preventDefault();
+				}
+			},
+			{ passive: false }
+		);
 		// One gallery per page (for now).
 		const galleryId = 'gallerydeluxe';
 		const dataAttributeName = 'data-gd-image-data-url';
@@ -22,22 +33,28 @@ let GalleryDeluxe = {
 
 		// The image opened in the lightbox.
 		let activeImage;
+		let exifTimeoutId;
 
 		// Lightbox setup.
 		const modal = document.getElementById('gd-modal');
-		const modalClose = document.getElementById('gd-modal-close');
+		const modalClose = modal.querySelector('#gd-modal-close');
 
 		const preventDefault = function (e) {
 			// For iphone.
 			e.preventDefault();
 		};
 
+		let imageWrapper = document.createElement('div');
+		imageWrapper.classList.add('gd-modal-content-wrapper');
+		modal.insertBefore(imageWrapper, modal.firstChild);
+
 		const closeModal = (e) => {
 			if (e) {
 				e.preventDefault();
 			}
 
-			modal.removeEventListener('touchmove', preventDefault);
+			imageWrapper.removeEventListener('touchmove', preventDefault);
+			imageWrapper.removeEventListener('gesturestart', preventDefault);
 
 			// Hide the modal.
 			modal.style.display = 'none';
@@ -67,7 +84,7 @@ let GalleryDeluxe = {
 		};
 
 		// Add some basic swipe logic.
-		newSwiper(modal, function (direction) {
+		newSwiper(imageWrapper, function (direction) {
 			swipe(direction);
 		});
 
@@ -86,10 +103,12 @@ let GalleryDeluxe = {
 		});
 
 		const openActiveImage = () => {
-			modal.addEventListener('touchmove', preventDefault);
+			imageWrapper.addEventListener('touchmove', preventDefault);
+			imageWrapper.addEventListener('gesturestart', preventDefault);
 
 			const classLoaded = 'gd-modal-loaded';
 			const classThumbnail = 'gd-modal-thumbnail';
+
 			// Prevent scrolling of the background.
 			document.body.style.overflow = 'hidden';
 			let oldEls = modal.querySelectorAll('.gd-modal-content');
@@ -112,9 +131,13 @@ let GalleryDeluxe = {
 				let modal = document.getElementById('gd-modal');
 
 				if (params.enable_exif) {
-					let exif = document.getElementById('gd-modal-exif');
+					if (exifTimeoutId) {
+						clearTimeout(exifTimeoutId);
+					}
+
+					let exif = modal.querySelector('#gd-modal-exif');
 					const onTimeOutClass = 'gd-modal-exif-ontimeout';
-					exif.classList.remove(onTimeOutClass);
+
 					let child = exif.lastElementChild;
 					while (child) {
 						exif.removeChild(child);
@@ -139,10 +162,11 @@ let GalleryDeluxe = {
 					for (const tag in tags) {
 						addTag(tag, tags[tag]);
 					}
+					exif.classList.remove(onTimeOutClass);
 
-					setTimeout(() => {
+					exifTimeoutId = setTimeout(() => {
 						exif.classList.add(onTimeOutClass);
-					}, 1000);
+					}, 1200);
 				}
 
 				let thumbnail = new Image();
@@ -160,14 +184,14 @@ let GalleryDeluxe = {
 
 				thumbnail.onload = function () {
 					if (thumbnail) {
-						modal.appendChild(thumbnail);
+						imageWrapper.appendChild(thumbnail);
 						removeOldEls();
 					}
 				};
 
 				fullImage.onload = function () {
 					if (fullImage) {
-						modal.appendChild(fullImage);
+						imageWrapper.appendChild(fullImage);
 						fullImage.classList.add(classLoaded);
 						if (thumbnail) {
 							thumbnail.classList.add(classLoaded);
