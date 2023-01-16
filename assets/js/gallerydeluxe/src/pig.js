@@ -1,5 +1,4 @@
-// Adapted from https://raw.githubusercontent.com/schlosser/pig.js/master/src/pig.js
-// The MIT License (MIT) Copyright (c) 2015 Dan Schlosser
+/*! The Pig library is MIT License (MIT) Copyright (c) 2015 Dan Schlosser, see https://github.com/schlosser/pig.js/blob/master/LICENSE.md  */
 
 'use strict';
 
