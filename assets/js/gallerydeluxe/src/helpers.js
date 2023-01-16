@@ -13,8 +13,8 @@ export function newSwiper(el, callback) {
 	};
 
 	var touch = {
-		touchstart: { x: -1, y: -1, d: -1 },
-		touchmove: { x: -1, y: -1, d: -1 },
+		touchstart: { x: -1, y: -1, x2: -1, y2: -1, d: -1 },
+		touchmove: { x: -1, y: -1, x2: -1, y2: -1, d: -1 },
 		multitouch: false,
 	};
 
@@ -40,6 +40,8 @@ export function newSwiper(el, callback) {
 		(this.touchstart.x = -1), (this.touchstart.y = -1);
 		(this.touchmove.x = -1), (this.touchmove.y = -1);
 		(this.touchstart.d = -1), (this.touchmove.d = -1);
+		(this.touchstart.x2 = -1), (this.touchstart.y2 = -1);
+		(this.touchmove.x2 = -1), (this.touchmove.y2 = -1);
 		this.multitouch = false;
 	};
 
@@ -47,6 +49,8 @@ export function newSwiper(el, callback) {
 		this.multitouch = this.multitouch || touches.length > 1;
 		if (touches.length > 1) {
 			this[event.type].d = fingerDistance(touches);
+			this[event.type].x2 = touches[1].pageX;
+			this[event.type].y2 = touches[1].pageY;
 		}
 		this[event.type].x = touches[0].pageX;
 		this[event.type].y = touches[0].pageY;
@@ -65,8 +69,10 @@ export function newSwiper(el, callback) {
 			if (scale < 1) {
 				scale = 1;
 			}
-			let distancex = touch.touchmove.x - touch.touchstart.x;
-			let distancey = touch.touchmove.y - touch.touchstart.y;
+			let distancex =
+				((touch.touchmove.x + touch.touchmove.x2) / 2 - (touch.touchstart.x + touch.touchstart.x2) / 2) * 2;
+			let distancey =
+				((touch.touchmove.y + touch.touchmove.y2) / 2 - (touch.touchstart.y + touch.touchstart.y2) / 2) * 2;
 
 			el.style.transform = `translate3d(${distancex}px, ${distancey}px, 0) scale(${scale})`;
 			el.style.zIndex = 1000;
