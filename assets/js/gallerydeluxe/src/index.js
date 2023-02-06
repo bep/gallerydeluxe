@@ -8,17 +8,6 @@ var debug = 0 ? console.log.bind(console, '[gallery-deluxe]') : function () {};
 
 let GalleryDeluxe = {
 	init: async function () {
-		// Having the gallery zoomable makes for a very confusing UI.
-		// This seem to be the only way to disable it on Safari on IOS.
-		document.addEventListener(
-			'touchmove',
-			function (event) {
-				if (event.scale !== 1) {
-					event.preventDefault();
-				}
-			},
-			{ passive: false }
-		);
 		// One gallery per page (for now).
 		const galleryId = 'gallerydeluxe';
 		const dataAttributeName = 'data-gd-image-data-url';
