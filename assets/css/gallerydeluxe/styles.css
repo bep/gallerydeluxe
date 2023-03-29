@@ -56,6 +56,7 @@
 
 .gd-modal-content.gd-modal-loaded.gd-modal-thumbnail {
   opacity: 0;
+  pointer-events: none;
 }
 
 .gd-modal-exif {
