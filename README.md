@@ -1,4 +1,5 @@
 >**Note 1:** See this [Gallery Deluxe Starter](https://github.com/bep/gallerydeluxe_starter) for a fast route to get this up and running.
+
 >**Note 2:** If you need _multiple_ galleries, see [Galleries Deluxe](https://github.com/bep/galleriesdeluxe).
 
 <hr/>
