@@ -26,6 +26,7 @@
 {{ with $images }}
   {{ range . }}
     {{ $thumbs := partial "gallerydeluxe/create-thumbs.html" . }}
+    {{ $full := $thumbs.full }}
     {{ $20 := (index $thumbs "20") }}
     {{ $colors := slice }}
     {{ $exif := dict }}
@@ -48,10 +49,10 @@
     {{ end }}
     {{ $m :=  dict
       "name" .Name
-      "full" .RelPermalink
+      "full" $full.RelPermalink
       "exif"  $exif
-      "width" .Width
-      "height" .Height
+      "width" $full.Width
+      "height" $full.Height
       "colors" $colors
       "20" $20.RelPermalink
       "100" (index $thumbs "100").RelPermalink
