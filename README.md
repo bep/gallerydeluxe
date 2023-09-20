@@ -32,7 +32,15 @@ The recommended way to add this to your site is to include it as a Hugo Module. 
          # Enable Exif data in the gallery.
          # See https://gohugo.io/content-management/image-processing/#exif-data for how to filter tags.
         enable_exif = false
+
+          # Optional watermark file for the large images.
+        [params.gallerydeluxe.watermark]
+            image = "images/gopher-hero8.png" # relative to /assets
+            posx  = "left"                    # one of "left", "center", "right"
+            posy  = "bottom"                  # one of "top", "center", "bottom"
 ```
+
+If you want full control over how your images gets created, create and adjust a copy of [layouts/partials/gallerydeluxe/create-thumbs.html](layouts/partials/gallerydeluxe/create-thumbs.html) into your own project.
 
 
 ## Credits
