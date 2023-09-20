@@ -1,5 +1,40 @@
 {{/* 20, 100, 250, and 500 height */}}
+{{ $full := . }}
+{{ with site.Params.gallerydeluxe.watermark }}
+  {{ $opts := . }}
+  {{ with resources.Get .image }}
+    {{ $watermark := . }}
+    {{ $fullWidth := $full.Width }}
+    {{ $watermarkMaxWidth := div $fullWidth 6 }}
+    {{ if gt $watermark.Width $watermarkMaxWidth }}
+      {{ $watermark = $watermark.Resize (printf "%dx" $watermarkMaxWidth) }}
+    {{ end }}
+    {{ $watermarkWidth := $watermark.Width }}
+    {{ $watermarkHeight := $watermark.Height }}
+    {{ $posx :=  $opts.posx | default "right" }}
+    {{ $posy := $opts.posy | default "botton" }}
+    {{ $padding := 20 }}
+    {{ $x := $padding }}
+    {{ $y := $padding }}
+    {{ if eq $posx "center" }}
+      {{ $x = div $fullWidth 2 }}
+      {{ $x = sub $x (div $watermarkWidth 2) }}
+    {{ end }}
+    {{ if eq $posy "center" }}
+      {{ $y = div $full.Height 2 }}
+      {{ $y = sub $y (div $watermarkHeight 2) }}
+    {{ end }}
+    {{ if eq $posx "right" }}
+      {{ $x = sub $fullWidth  (add $watermarkWidth $padding) }}
+    {{ end }}
+    {{ if eq $posy "bottom" }}
+      {{ $y = sub  $full.Height (add $watermarkHeight $padding) }}
+    {{ end }}
+    {{ $full = $full.Filter (images.Overlay $watermark $x $y ) }}
+  {{ end }}
+{{ end }}
 {{ $m := dict
+  "full" $full
   "20"  (.Resize "x20")
   "100" (.Resize "x100")
   "250" (.Resize "x250")
