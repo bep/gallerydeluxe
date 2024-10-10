@@ -19,7 +19,7 @@
   {{ $gallery := site.GetPage $sourcePath }}
   {{ $images = $gallery.Resources.ByType "image" }}
 {{ end }}
-{{ $galleryID :=  $galleryIDBase | crypto.FNV32a }}
+{{ $galleryID :=  $galleryIDBase | hash.FNV32a }}
 {{ $imageDataUrl := "" }}
 {{ $s := slice }}
 {{ $params := site.Params.gallerydeluxe }}
