@@ -5,7 +5,7 @@ licenselink = "https://github.com/bep/gallerydeluxe/blob/main/LICENSE"
 description = "Fast gallery suitable for lots of images."
 homepage    = "https://github.com/bep/gallerydeluxe"
 demosite    = "https://staticbattery.com/"
-tags        = ["Gallery", "Responsive"]
+tags        = ["gallery", "sass"]
 min_version = "0.129.0"
 [author]
   name     = "Bjørn Erik Pedersen"
