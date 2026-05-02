@@ -13,13 +13,14 @@ disableKinds = ["taxonomy", "term", "section"]
     [params.gallerydeluxe]
         shuffle     = false
         reverse     = true
-        enable_exif = false
+        enable_exif = true
 
 [imaging]
     resampleFilter = "CatmullRom"
     quality        = 71
     anchor         = "smart"
-    [imaging.exif]
-        disableDate    = false
-        disableLatLong = true
-        includeFields  = 'Artist|LensModel|FNumber|ExposureTime'
+    [imaging.meta]
+        fields = [
+            '! *{GPS,Exif,Exposure[MPB],Contrast,Resolution,Sharp,JPEG,Metering,Sensing,Saturation,ColorSpace,Flash,WhiteBalance}*',
+        ]
+        sources = ['exif']

@@ -33,7 +33,7 @@
     {{ if $params.enable_exif }}
       {{/* Workaround for https://github.com/gohugoio/hugo/issues/10345 */}}
       {{ $tags := newScratch }}
-      {{ range $k, $v := .Meta.Tags }}
+      {{ range $k, $v := .Meta.Exif }}
         {{ $tags.Set $k $v }}
       {{ end }}
       {{ $exif = dict
