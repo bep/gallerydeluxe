@@ -3,24 +3,23 @@ baseURL = "https://example.com"
 disableKinds = ["taxonomy", "term", "section"]
 
 [module]
-    [[module.imports]]
-        path = "github.com/bep/gallerydeluxe_starter"
+	[[module.imports]]
+		path = "github.com/bep/gallerydeluxe_starter"
 
 [params]
-    # Set to enable Plausible Analytics.
-    plausible_domain = ""
+	# Set to enable Plausible Analytics.
+	plausible_domain = ""
 
-    [params.gallerydeluxe]
-        shuffle     = false
-        reverse     = true
-        enable_exif = true
+	[params.gallerydeluxe]
+		shuffle     = false
+		reverse     = true
+		enable_exif = true
 
 [imaging]
-    resampleFilter = "CatmullRom"
-    quality        = 71
-    anchor         = "smart"
-    [imaging.meta]
-        fields = [
-            '! *{GPS,Exif,Exposure[MPB],Contrast,Resolution,Sharp,JPEG,Metering,Sensing,Saturation,ColorSpace,Flash,WhiteBalance}*',
-        ]
-        sources = ['exif']
+	resampleFilter = "CatmullRom"
+	anchor         = "smart"
+	[imaging.meta]
+		fields = [
+			'! *{GPS,Exif,Exposure[MPB],Contrast,Resolution,Sharp,JPEG,Metering,Sensing,Saturation,ColorSpace,Flash,WhiteBalance}*',
+		]
+		sources = ['exif']
