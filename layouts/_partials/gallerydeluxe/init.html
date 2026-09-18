@@ -5,69 +5,69 @@
 {{ $images := slice }}
 {{ $galleryIDBase := .id }}
 {{ with .images }}
-  {{ $images = . }}
-  {{ if not $galleryIDBase }}
-    {{ range $images }}
-      {{ $galleryIDBase = printf "%s%s" $galleryIDBase .RelPermalink }}
-    {{ end }}
-  {{ end }}
+	{{ $images = . }}
+	{{ if not $galleryIDBase }}
+		{{ range $images }}
+			{{ $galleryIDBase = printf "%s%s" $galleryIDBase .RelPermalink }}
+		{{ end }}
+	{{ end }}
 {{ else }}
-  {{ $sourcePath := .sourcePath | default "images" }}
-  {{ if not $galleryIDBase }}
-    {{ $galleryIDBase = $sourcePath }}
-  {{ end }}
-  {{ $gallery := site.GetPage $sourcePath }}
-  {{ $images = $gallery.Resources.ByType "image" }}
+	{{ $sourcePath := .sourcePath | default "images" }}
+	{{ if not $galleryIDBase }}
+		{{ $galleryIDBase = $sourcePath }}
+	{{ end }}
+	{{ $gallery := site.GetPage $sourcePath }}
+	{{ $images = $gallery.Resources.ByType "image" }}
 {{ end }}
-{{ $galleryID :=  $galleryIDBase | hash.FNV32a }}
+{{ $galleryID := $galleryIDBase | hash.FNV32a }}
 {{ $imageDataUrl := "" }}
 {{ $s := slice }}
 {{ $params := site.Params.gallerydeluxe }}
 {{ with $images }}
-  {{ range . }}
-    {{ $thumbs := partial "gallerydeluxe/create-thumbs.html" . }}
-    {{ $full := $thumbs.full }}
-    {{ $20 := (index $thumbs "20") }}
-    {{ $colors := slice }}
-    {{ $exif := dict }}
-    {{ if $params.enable_exif }}
-      {{/* Workaround for https://github.com/gohugoio/hugo/issues/10345 */}}
-      {{ $tags := newScratch }}
-      {{ range $k, $v := .Meta.Exif }}
-        {{ $tags.Set $k $v }}
-      {{ end }}
-      {{ $exif = dict
-        "Tags" $tags.Values
-        "Date" .Meta.Date
-        "Lat" .Meta.Lat
-        "Long" .Meta.Long
-      }}
-    {{ end }}
-    {{ $colors = $20.Colors }}
-    {{ $m :=  dict
-      "name" .Name
-      "full" $full.RelPermalink
-      "exif"  $exif
-      "width" $full.Width
-      "height" $full.Height
-      "colors" $colors
-      "20" $20.RelPermalink
-      "100" (index $thumbs "100").RelPermalink
-      "250" (index $thumbs "250").RelPermalink
-      "500" (index $thumbs "500").RelPermalink
-    }}
-    {{ $s = $s | append $m }}
-  {{ end }}
-  {{ $r := $s | jsonify | resources.FromString (printf "%d-gallery.json" $galleryID ) }}
-  {{ if hugo.IsProduction }}
-    {{ $r = $r | minify | fingerprint }}
-  {{ end }}
-  {{ $imageDataUrl = $r.RelPermalink }}
+	{{ range . }}
+		{{ $thumbs := partial "gallerydeluxe/create-thumbs.html" . }}
+		{{ $full := $thumbs.full }}
+		{{ $20 := (index $thumbs "20") }}
+		{{ $colors := slice }}
+		{{ $exif := dict }}
+		{{ if $params.enable_exif }}
+			{{/* Workaround for https://github.com/gohugoio/hugo/issues/10345 */}}
+			{{ $tags := newScratch }}
+			{{ range $k, $v := .Meta.Exif }}
+				{{ $tags.Set $k $v }}
+			{{ end }}
+			{{ $exif = dict
+				"Tags" $tags.Values
+				"Date" .Meta.Date
+				"Lat" .Meta.Lat
+				"Long" .Meta.Long
+			}}
+		{{ end }}
+		{{ $colors = $20.Colors }}
+		{{ $m := dict
+			"name" .Name
+			"full" $full.RelPermalink
+			"exif" $exif
+			"width" $full.Width
+			"height" $full.Height
+			"colors" $colors
+			"20" $20.RelPermalink
+			"100" (index $thumbs "100").RelPermalink
+			"250" (index $thumbs "250").RelPermalink
+			"500" (index $thumbs "500").RelPermalink
+		}}
+		{{ $s = $s | append $m }}
+	{{ end }}
+	{{ $r := $s | jsonify | resources.FromString (printf "%d-gallery.json" $galleryID) }}
+	{{ if hugo.IsProduction }}
+		{{ $r = $r | minify | fingerprint }}
+	{{ end }}
+	{{ $imageDataUrl = $r.RelPermalink }}
 {{ else }}
-  {{ errorf "gallerydeluxe: No images provided. Either 'images' as as slice of images or 'sourcePath' must be set to point to a valid Hugo bundle with JPG images in it." }}
+	{{ errorf "gallerydeluxe: No images provided. Either 'images' as as slice of images or 'sourcePath' must be set to point to a valid Hugo bundle with JPG images in it." }}
 {{ end }}
 
 {{ return (dict
-  "imageDataUrl" $imageDataUrl
-  )
+	"imageDataUrl" $imageDataUrl
+)
 }}
